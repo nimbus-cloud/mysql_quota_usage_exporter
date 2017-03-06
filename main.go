@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -33,7 +34,7 @@ func main() {
 		*dbPort))
 
 	log.Printf("Starting Server: %s", *listenAddress)
-	handler := prometheus.Handler()
+	handler := promhttp.Handler()
 	if *metricsPath == "" || *metricsPath == "/" {
 		http.Handle(*metricsPath, handler)
 	} else {
